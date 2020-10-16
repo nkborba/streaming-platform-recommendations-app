@@ -5,6 +5,8 @@ import './App.css';
 function App() {
 
   const BACKEND_SVC = process.env.REACT_APP_BACKEND_SVC || 'http://localhost:3333';
+  var current_id = "";
+  // const search_suggestion = document.querySelector("#")
 
   var [whishList, setList] = useState([])
   var [recommended, setRecommendation] = useState({})
@@ -24,11 +26,31 @@ function App() {
     }
   }
 
-  async function handleSearchBlur(){
-    setPossibleTitles([]);
+  document.addEventListener('click', function(e) {
+    localStorage.setItem("current_id", e.target.id)
+  }, false)
+
+  function getCurrentId() {
+    return localStorage.getItem("current_id");
   }
 
-  function handleInclusion(itemTitle) {
+  // document.addEventListener('blur', function)
+
+  function handleSearchBlur(){
+    // if (localStorage.getItem("current_id") != null) {
+    //   console.log("Current ID: "+ getCurrentId())
+    //   localStorage.setItem("current_id", null)
+    // } else {
+    //   setPossibleTitles([]);
+    //   localStorage.setItem("current_id", null)
+    // }
+    // console.log("Current ID: "+ getCurrentId())
+    // console.log("Current ID: "+ current_id)
+    // setPossibleTitles([]);
+  }
+
+  async function handleInclusion(itemTitle) {
+
     let title = document.getElementById("search_field").value;
     if (itemTitle !== null) {
       title = itemTitle;
@@ -224,10 +246,10 @@ export default App;
 const SearchPreview = ({ title, index, handleInclusion, year }) => {
   return (
     <div
+      id="search_suggestion"
       onClick={() => handleInclusion(title)}
-      className={`search-preview ${index == 0 ? "start" : ""}`}
-    >
-      <div className="first">
+      className={`search-preview ${index == 0 ? "start" : ""}`}>
+      <div id="movie_suggestion" className="first">
         <p className="title">{title} ({year})</p>
       </div>
     </div>
